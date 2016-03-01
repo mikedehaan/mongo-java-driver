@@ -68,7 +68,7 @@ class DefaultClusterableServerFactory implements ClusterableServerFactory {
                                                                                 credentialList,
                                                                                 connectionListener),
                                             connectionPool);
-        return new DefaultServer(serverAddress, clusterSettings.getMode(), connectionPool, new DefaultConnectionFactory(),
+        return new DefaultServer(serverAddress, clusterSettings.getMode(), connectionPool, new ThreadAffinityConnectionFactory(),
                                  serverMonitorFactory, commandListener);
     }
 

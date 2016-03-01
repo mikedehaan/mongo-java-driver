@@ -17,12 +17,7 @@
 package com.mongodb;
 
 import com.mongodb.annotations.ThreadSafe;
-import com.mongodb.binding.ClusterBinding;
-import com.mongodb.binding.ConnectionSource;
-import com.mongodb.binding.ReadBinding;
-import com.mongodb.binding.ReadWriteBinding;
-import com.mongodb.binding.SingleServerBinding;
-import com.mongodb.binding.WriteBinding;
+import com.mongodb.binding.*;
 import com.mongodb.connection.BufferProvider;
 import com.mongodb.connection.Cluster;
 import com.mongodb.connection.ClusterConnectionMode;
@@ -745,7 +740,8 @@ public class Mongo {
     }
 
     private ReadWriteBinding getReadWriteBinding(final ReadPreference readPreference) {
-        return new ClusterBinding(getCluster(), readPreference);
+        // MDH: Allow this to be customized
+        return new ThreadAffinityBinding(getCluster(), readPreference);
     }
 
     void addOrphanedCursor(final ServerCursor serverCursor, final MongoNamespace namespace) {
